@@ -1,0 +1,68 @@
+.lobster-regular {
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+body{
+    background:fixed url(/assets/img/pexels-edward-sy-3348027-35066466.jpg);
+    background-size: cover;
+    background-blend-mode: darken;
+    margin: 0;  
+}
+.main_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 70px;
+    padding: 0 30px;
+    margin: 50px auto;
+}
+.header_left_side{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.logo_img img{
+    width: 40px;  
+    height: auto;
+    display: block;
+}
+.web_name{
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Lobster", sans-serif;
+    font-size: 10px;
+    color: #000000aa;
+}
+.search-input{
+    background-color:rgba(218, 222, 223, 0.541);
+    outline: none;
+    border: none;
+    height: 35px;
+    width: 200px;
+    font-size: 17px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: cursive;
+    border-radius: 20px;
+    color:  #000000aa;
+    transition:background-color 0.3s ease;
+}
+.search-input:hover{
+    background-color: rgba(127, 132, 133, 0.541);
+}
+.search-input::placeholder{
+    font-family: cursive;
+    font-size: 17px;
+    color: #000000aa;
+}
+.glass{ 
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
