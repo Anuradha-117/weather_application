@@ -1,3 +1,4 @@
+// POINTERS
 const searchInput = document.querySelector('.search-input');
 const suggestionsDropdown = document.getElementById('suggestions-dropdown');
 const locationDisplay = document.getElementById('location-display');
@@ -55,7 +56,7 @@ function fetchWeather(city) {
         });
 }
 
-//FUNCTIONS TO UPDATE HOURLY BOZES
+//FUNCTIONS TO UPDATE HOURLY BOXES
 function updateHourlyBoxes(hourList, currentHourNum) {
     for (let i = 1; i <= 10; i++) {
         let nextHourData = hourList[currentHourNum + i];
@@ -99,7 +100,8 @@ function getMyIcon(conditionText, isDay) {
 
     return "assets/img/" + fileName;
 }
-// BACKGROUND .SVG VIDEO UPDATER
+
+// BACKGROUND .SVG UPDATER
 function updateBackground(conditionText, isDay) {
     let text = conditionText.toLowerCase();
     let bgFileName = "sunny.svg";
@@ -123,6 +125,7 @@ function updateBackground(conditionText, isDay) {
     bgImg.src = "assets/img/" + bgFileName;
 }
 
+// INPUT LISTENER FOR ENTER KEY
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         fetchWeather(searchInput.value);
@@ -130,7 +133,9 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
-// AUTOCOMPLETE SEARCH FUNCTIONALITY
+// --- AUTOCOMPLETE SEARCH LOGIC ---
+
+// 1. INPUT LISTENER
 searchInput.addEventListener('input', (e) => {
     const query = e.target.value.trim();
     
@@ -145,14 +150,14 @@ searchInput.addEventListener('input', (e) => {
     }, 300);
 });
 
-// CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+// 2. CLOSE DROPDOWN WHEN CLICKING OUTSIDE
 document.addEventListener('click', (e) => {
-    if (!e.target.closest('.header_right_side')) {
+    if (!e.target.closest('.search-wrapper')) {
         suggestionsDropdown.style.display = 'none';
     }
 });
 
-// FETCH CITY SUGGESTIONS
+// 3. FETCH AND RENDER SUGGESTIONS
 function fetchCitySuggestions(query) {
     let url = "https://api.weatherapi.com/v1/search.json?key=" + API_KEY + "&q=" + encodeURIComponent(query);
 
@@ -160,24 +165,25 @@ function fetchCitySuggestions(query) {
         .then(res => res.json())
         .then(data => {
             if (data && data.length > 0) {
+                // Clear old list
                 suggestionsDropdown.innerHTML = '';
+                
+                // Loop through results (limit to 8)
                 data.slice(0, 8).forEach(city => {
                     let li = document.createElement('li');
-                    li.style.cssText = 'padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #eee;';
                     li.textContent = `${city.name}, ${city.country}`;
-                    li.addEventListener('mouseover', () => {
-                        li.style.backgroundColor = '#f0f0f0';
-                    });
-                    li.addEventListener('mouseout', () => {
-                        li.style.backgroundColor = 'transparent';
-                    });
+                    
+                    // Click Event
                     li.addEventListener('click', () => {
                         searchInput.value = `${city.name}, ${city.country}`;
                         fetchWeather(`${city.name}, ${city.country}`);
                         suggestionsDropdown.style.display = 'none';
                     });
+                    
                     suggestionsDropdown.appendChild(li);
                 });
+
+                // Show the list
                 suggestionsDropdown.style.display = 'block';
             } else {
                 suggestionsDropdown.style.display = 'none';
