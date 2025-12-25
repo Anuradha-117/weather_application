@@ -1,0 +1,83 @@
+<svg width="100%" height="100%" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D0D3F"/>
+      <stop offset="50%" stop-color="#1A237E"/>
+      <stop offset="100%" stop-color="#311B92"/>
+    </linearGradient>
+    
+    <circle id="star" r="1.5" fill="#FFFFFF" />
+    
+    <circle id="firefly" r="2" fill="#C6FF00" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#skyNight)"/>
+
+  <g>
+      <use href="#star" x="100" y="150"><animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite"/></use>
+      <use href="#star" x="300" y="120"><animate attributeName="opacity" values="1;0.5;1" dur="5s" repeatCount="indefinite"/></use>
+      <use href="#star" x="500" y="200" r="2"><animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/></use>
+      <use href="#star" x="700" y="140"><animate attributeName="opacity" values="1;0.4;1" dur="4s" repeatCount="indefinite"/></use>
+      <use href="#star" x="200" y="300"><animate attributeName="opacity" values="1;0.1;1" dur="3.5s" repeatCount="indefinite"/></use>
+      <use href="#star" x="600" y="250" r="1"><animate attributeName="opacity" values="1;0.6;1" dur="6s" repeatCount="indefinite"/></use>
+  </g>
+
+  <g transform="translate(650, 200)">
+      <circle r="40" fill="#FFF9C4" />
+      <circle r="50" fill="#FFF9C4" opacity="0.2">
+          <animate attributeName="r" values="50;55;50" dur="4s" repeatCount="indefinite"/>
+      </circle>
+  </g>
+
+  <path d="M0 350 Q 200 250 400 350 T 800 300 V 600 H 0 Z" fill="#000000" opacity="0.6"/>
+  
+  <path d="M0 400 Q 300 300 600 400 T 800 380 V 600 H 0 Z" fill="#000000" />
+  
+  <g transform="translate(100, 380)" fill="#000000">
+      <path d="M-15 100 L -10 0 Q 0 -10 10 0 L 15 100 Z" />
+      <g>
+        <ellipse cx="0" cy="-20" rx="40" ry="30" />
+        <ellipse cx="-30" cy="10" rx="35" ry="25" />
+        <ellipse cx="30" cy="10" rx="35" ry="25" />
+      </g>
+  </g>
+  
+  <g transform="translate(650, 400)" fill="#000000">
+      <g>
+        <path d="M-10 80 L 10 80 L 5 0 L -5 0 Z" />
+        <g>
+            <path d="M-30 60 L 30 60 L 0 20 Z" />
+            <path d="M-25 35 L 25 35 L 0 0 Z" />
+            <path d="M-15 15 L 15 15 L 0 -20 Z" />
+        </g>
+      </g>
+      <g transform="translate(80, 20) scale(0.8)">
+        <path d="M-10 80 L 10 80 L 5 0 L -5 0 Z" />
+        <g>
+            <path d="M-30 60 L 30 60 L 0 20 Z" />
+            <path d="M-25 35 L 25 35 L 0 0 Z" />
+            <path d="M-15 15 L 15 15 L 0 -20 Z" />
+        </g>
+      </g>
+  </g>
+
+  <g>
+      <use href="#firefly" x="50" y="450">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 10 -10; 0 0" dur="3s" repeatCount="indefinite"/>
+      </use>
+      <use href="#firefly" x="200" y="420">
+        <animateTransform attributeName="transform" type="translate" values="0 0; -15 5; 0 0" dur="4s" repeatCount="indefinite"/>
+      </use>
+      <use href="#firefly" x="400" y="480">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 5 -15; 0 0" dur="3.5s" repeatCount="indefinite"/>
+      </use>
+      <use href="#firefly" x="600" y="430">
+        <animateTransform attributeName="transform" type="translate" values="0 0; -10 10; 0 0" dur="4.5s" repeatCount="indefinite"/>
+      </use>
+      <use href="#firefly" x="750" y="460">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 15 -5; 0 0" dur="5s" repeatCount="indefinite"/>
+      </use>
+  </g>
+</svg>
