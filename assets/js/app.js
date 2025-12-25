@@ -1,4 +1,5 @@
 const searchInput = document.querySelector('.search-input');
+const suggestionsDropdown = document.getElementById('suggestions-dropdown');
 const locationDisplay = document.getElementById('location-display');
 const dateDisplay = document.getElementById('date-display');
 const tempDisplay = document.getElementById('temp-display');
@@ -13,6 +14,9 @@ const pressureVal = document.getElementById('pressure-val');
 
 // API KEY
 const API_KEY = "7c789b66ae5f48acaf871239252312";
+
+// TIMEOUT FOR AUTOCOMPLETE
+let searchTimeout;
 
 // MAIN FETCH FUNCTION
 function fetchWeather(city) {
@@ -122,6 +126,85 @@ function updateBackground(conditionText, isDay) {
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         fetchWeather(searchInput.value);
+        suggestionsDropdown.style.display = 'none';
     }
 });
-fetchWeather("Ratnapura");
+
+// AUTOCOMPLETE SEARCH FUNCTIONALITY
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+    
+    if (query.length < 2) {
+        suggestionsDropdown.style.display = 'none';
+        return;
+    }
+    
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        fetchCitySuggestions(query);
+    }, 300);
+});
+
+// CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header_right_side')) {
+        suggestionsDropdown.style.display = 'none';
+    }
+});
+
+// FETCH CITY SUGGESTIONS
+function fetchCitySuggestions(query) {
+    let url = "https://api.weatherapi.com/v1/search.json?key=" + API_KEY + "&q=" + encodeURIComponent(query);
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                suggestionsDropdown.innerHTML = '';
+                data.slice(0, 8).forEach(city => {
+                    let li = document.createElement('li');
+                    li.style.cssText = 'padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #eee;';
+                    li.textContent = `${city.name}, ${city.country}`;
+                    li.addEventListener('mouseover', () => {
+                        li.style.backgroundColor = '#f0f0f0';
+                    });
+                    li.addEventListener('mouseout', () => {
+                        li.style.backgroundColor = 'transparent';
+                    });
+                    li.addEventListener('click', () => {
+                        searchInput.value = `${city.name}, ${city.country}`;
+                        fetchWeather(`${city.name}, ${city.country}`);
+                        suggestionsDropdown.style.display = 'none';
+                    });
+                    suggestionsDropdown.appendChild(li);
+                });
+                suggestionsDropdown.style.display = 'block';
+            } else {
+                suggestionsDropdown.style.display = 'none';
+            }
+        })
+        .catch(err => {
+            console.error("Autocomplete error:", err);
+            suggestionsDropdown.style.display = 'none';
+        });
+}
+
+// LOAD USER'S IP LOCATION ON PAGE LOAD
+function loadDefaultWeather() {
+    let url = "https://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=auto:ip";
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            fetchWeather(`${data.location.name}, ${data.location.country}`);
+        })
+        .catch(err => {
+            console.error("Error fetching IP location:", err);
+            fetchWeather("London");
+        });
+}
+
+// INITIAL PAGE LOAD
+window.addEventListener('load', () => {
+    loadDefaultWeather();
+});
