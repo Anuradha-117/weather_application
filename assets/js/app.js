@@ -16,7 +16,7 @@ const API_KEY = "7c789b66ae5f48acaf871239252312";
 
 // MAIN FETCH FUNCTION
 function fetchWeather(city) {
-    let url = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=" + city + "&days=2&aqi=no&alerts=no";
+    let url = "https://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=" + city + "&days=2&aqi=no&alerts=no";
 
     fetch(url)
         .then(res => res.json())
