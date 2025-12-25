@@ -1,4 +1,6 @@
+// POINTERS
 const searchInput = document.querySelector('.search-input');
+const suggestionsDropdown = document.getElementById('suggestions-dropdown');
 const locationDisplay = document.getElementById('location-display');
 const dateDisplay = document.getElementById('date-display');
 const tempDisplay = document.getElementById('temp-display');
@@ -13,6 +15,9 @@ const pressureVal = document.getElementById('pressure-val');
 
 // API KEY
 const API_KEY = "7c789b66ae5f48acaf871239252312";
+
+// TIMEOUT FOR AUTOCOMPLETE
+let searchTimeout;
 
 // MAIN FETCH FUNCTION
 function fetchWeather(city) {
@@ -51,7 +56,7 @@ function fetchWeather(city) {
         });
 }
 
-//FUNCTIONS TO UPDATE HOURLY BOZES
+//FUNCTIONS TO UPDATE HOURLY BOXES
 function updateHourlyBoxes(hourList, currentHourNum) {
     for (let i = 1; i <= 10; i++) {
         let nextHourData = hourList[currentHourNum + i];
@@ -95,7 +100,8 @@ function getMyIcon(conditionText, isDay) {
 
     return "assets/img/" + fileName;
 }
-// BACKGROUND .SVG VIDEO UPDATER
+
+// BACKGROUND .SVG UPDATER
 function updateBackground(conditionText, isDay) {
     let text = conditionText.toLowerCase();
     let bgFileName = "sunny.svg";
@@ -119,9 +125,92 @@ function updateBackground(conditionText, isDay) {
     bgImg.src = "assets/img/" + bgFileName;
 }
 
+// INPUT LISTENER FOR ENTER KEY
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         fetchWeather(searchInput.value);
+        suggestionsDropdown.style.display = 'none';
     }
 });
-fetchWeather("Ratnapura");
+
+// --- AUTOCOMPLETE SEARCH LOGIC ---
+
+// 1. INPUT LISTENER
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+    
+    if (query.length < 2) {
+        suggestionsDropdown.style.display = 'none';
+        return;
+    }
+    
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        fetchCitySuggestions(query);
+    }, 300);
+});
+
+// 2. CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-wrapper')) {
+        suggestionsDropdown.style.display = 'none';
+    }
+});
+
+// 3. FETCH AND RENDER SUGGESTIONS
+function fetchCitySuggestions(query) {
+    let url = "https://api.weatherapi.com/v1/search.json?key=" + API_KEY + "&q=" + encodeURIComponent(query);
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                // Clear old list
+                suggestionsDropdown.innerHTML = '';
+                
+                // Loop through results (limit to 8)
+                data.slice(0, 8).forEach(city => {
+                    let li = document.createElement('li');
+                    li.textContent = `${city.name}, ${city.country}`;
+                    
+                    // Click Event
+                    li.addEventListener('click', () => {
+                        searchInput.value = `${city.name}, ${city.country}`;
+                        fetchWeather(`${city.name}, ${city.country}`);
+                        suggestionsDropdown.style.display = 'none';
+                    });
+                    
+                    suggestionsDropdown.appendChild(li);
+                });
+
+                // Show the list
+                suggestionsDropdown.style.display = 'block';
+            } else {
+                suggestionsDropdown.style.display = 'none';
+            }
+        })
+        .catch(err => {
+            console.error("Autocomplete error:", err);
+            suggestionsDropdown.style.display = 'none';
+        });
+}
+
+// LOAD USER'S IP LOCATION ON PAGE LOAD
+function loadDefaultWeather() {
+    let url = "https://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=auto:ip";
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            fetchWeather(`${data.location.name}, ${data.location.country}`);
+        })
+        .catch(err => {
+            console.error("Error fetching IP location:", err);
+            fetchWeather("London");
+        });
+}
+
+// INITIAL PAGE LOAD
+window.addEventListener('load', () => {
+    loadDefaultWeather();
+});

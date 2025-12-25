@@ -32,6 +32,10 @@ body {
     padding: 10px 30px;
     margin: 40px auto;
     transition: width 0.3s ease;
+    
+    /* NEW LINES TO FIX DROPDOWN */
+    position: relative;
+    z-index: 2000; 
 }
 
 .header_left_side {
@@ -152,6 +156,75 @@ body {
     color: rgba(255, 255, 255, 0.85) !important; 
 }
 
+/* --- NEW SEARCH DROPDOWN STYLES --- */
+
+/* Wrapper to hold the input and the dropdown together */
+.search-wrapper {
+    position: relative;
+    width: 250px; /* Matches your input width */
+}
+
+/* The Dropdown Box (Glass Effect) */
+.suggestions-list {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 50px; /* Pushes it slightly below the input */
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    
+    /* Glassmorphism Style */
+    background: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    z-index: 1000;
+}
+
+/* The Individual Items */
+.suggestions-list li {
+    padding: 12px 20px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+/* Remove border from last item */
+.suggestions-list li:last-child {
+    border-bottom: none;
+}
+
+/* Hover Effect */
+.suggestions-list li:hover {
+    background: rgba(255, 255, 255, 0.2); 
+    color: #fff;
+    padding-left: 25px; 
+}
+
+/* Custom Scrollbar for the dropdown */
+.suggestions-list::-webkit-scrollbar {
+    width: 6px;
+}
+.suggestions-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.suggestions-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+.suggestions-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
 @media (max-width: 768px) {
     .main_header {
         width: 95%;
@@ -166,7 +239,7 @@ body {
         justify-content: center;
     }
 
-    .search-input {
+    .search-input, .search-wrapper {
         width: 100%;
     }
 
