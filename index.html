@@ -5,24 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Now</title>
-
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="/assets/vid/sunset vid.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <div class="container-fluid pb-5">
-        
+    <img src="assets/img/sunny.svg" id="bg-img" alt="Weather Background">
+    <div class="container-fluid pb-5">      
         <div class="main_header glass">
             <div class="header_left_side">
                 <div class="logo_img">
@@ -38,56 +28,49 @@
         </div>
 
         <div class="row justify-content-center mt-4 px-3 px-md-0">
-
             <div class="col-md-5 mb-3">
                 <div class="glass p-4 text-center h-100 d-flex flex-column justify-content-center align-items-center big-weather-card">
-                    <h2 class="text-white mb-0">Ratnapura, LK</h2>
-                    <p class="text-white-50">Today, 12 Nov</p>
+                    <h2 class="text-white mb-0" id="location-display">Loading...</h2>
+                    <p class="text-white-50" id="date-display">--</p>
 
                     <div class="main-icon-wrapper my-3">
-                        <img src="assets/img/main-weather.svg" alt="Sunny" class="img-fluid">
+                        <img src="assets/img/clear-day.svg" alt="Weather Icon" class="img-fluid" id="main-icon">
                     </div>
-
-                    <h1 class="text-white display-1 fw-bold">18°C</h1>
-                    <p class="text-white fs-4">Partly Cloudy</p>
+                    <h1 class="text-white display-1 fw-bold" id="temp-display">--°C</h1>
+                    <p class="text-white fs-4" id="condition-display">--</p>
                 </div>
             </div>
 
             <div class="col-md-5 mb-3">
                 <div class="row g-3">
-
                     <div class="col-6">
                         <div class="glass p-3 text-center h-100">
                             <img src="assets/img/humidity.svg" alt="Humidity" class="detail-icon mb-2">
                             <p class="text-white-50 mb-1 small-label">Humidity</p>
-                            <h4 class="text-white fw-bold">65%</h4>
+                            <h4 class="text-white fw-bold" id="humidity-val">--%</h4>
                         </div>
                     </div>
-
                     <div class="col-6">
                         <div class="glass p-3 text-center h-100">
                             <img src="assets/img/wind.svg" alt="Wind" class="detail-icon mb-2">
                             <p class="text-white-50 mb-1 small-label">Wind Speed</p>
-                            <h4 class="text-white fw-bold">12 km/h</h4>
+                            <h4 class="text-white fw-bold" id="wind-val">-- km/h</h4>
                         </div>
                     </div>
-
                     <div class="col-6">
                         <div class="glass p-3 text-center h-100">
-                            <img src="assets/img/visibility3.png" alt="Visibility" class="detail-icon mb-2">
+                            <img src="assets/img/visibility2.png" alt="Visibility" class="detail-icon mb-2">
                             <p class="text-white-50 mb-1 small-label">Visibility</p>
-                            <h4 class="text-white fw-bold">10 km</h4>
+                            <h4 class="text-white fw-bold" id="vis-val">-- km</h4>
                         </div>
                     </div>
-
                     <div class="col-6">
                         <div class="glass p-3 text-center h-100">
                             <img src="assets/img/pressure.svg" alt="Pressure" class="detail-icon mb-2">
                             <p class="text-white-50 mb-1 small-label">Pressure</p>
-                            <h4 class="text-white fw-bold">1015 hPa</h4>
+                            <h4 class="text-white fw-bold" id="pressure-val">-- hPa</h4>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -95,46 +78,71 @@
         <div class="row justify-content-center mt-2 mb-4 px-3 px-md-0">
             <div class="col-md-10">
                 <div class="glass p-4">
-                    <h5 class="text-white mb-3 ps-1">Hourly Forecast</h5>
+                    <h5 class="text-white mb-3 ps-1">Hourly Forecast</h5>                   
+                    <div class="d-flex gap-2 overflow-auto pb-2" id="hourly-container">
+                        <div class="hourly-scroll">
+                            
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-1">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-1">
+                                <p class="text-white fw-bold mb-0" id="temp-1">--°</p>
+                            </div>
 
-                    <div class="hourly-scroll d-flex gap-3">
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-2">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-2">
+                                <p class="text-white fw-bold mb-0" id="temp-2">--°</p>
+                            </div>
 
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">Now</p>
-                            <img src="assets/img/sun_small.svg" alt="sun" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">18°</p>
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-3">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-3">
+                                <p class="text-white fw-bold mb-0" id="temp-3">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-4">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-4">
+                                <p class="text-white fw-bold mb-0" id="temp-4">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-5">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-5">
+                                <p class="text-white fw-bold mb-0" id="temp-5">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-6">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-6">
+                                <p class="text-white fw-bold mb-0" id="temp-6">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-7">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-7">
+                                <p class="text-white fw-bold mb-0" id="temp-7">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-8">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-8">
+                                <p class="text-white fw-bold mb-0" id="temp-8">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-9">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-9">
+                                <p class="text-white fw-bold mb-0" id="temp-9">--°</p>
+                            </div>
+
+                            <div class="hourly-card glass p-3 text-center">
+                                <p class="text-white-50 mb-1" id="time-10">--</p>
+                                <img src="assets/img/cloudy.svg" class="hourly-icon mb-2" id="icon-10">
+                                <p class="text-white fw-bold mb-0" id="temp-10">--°</p>
+                            </div>
+
                         </div>
-
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">1 PM</p>
-                            <img src="assets/img/cloud_small.svg" alt="cloud" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">19°</p>
-                        </div>
-
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">2 PM</p>
-                            <img src="assets/img/rain_small.svg" alt="rain" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">20°</p>
-                        </div>
-
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">3 PM</p>
-                            <img src="assets/img/sun_small.svg" alt="sun" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">19°</p>
-                        </div>
-
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">4 PM</p>
-                            <img src="assets/img/cloud_small.svg" alt="cloud" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">18°</p>
-                        </div>
-
-                        <div class="hourly-card glass p-3 text-center">
-                            <p class="text-white-50 mb-1">5 PM</p>
-                            <img src="assets/img/moon_small_1.svg" alt="moon" class="hourly-icon mb-2">
-                            <p class="text-white fw-bold mb-0">17°</p>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -143,8 +151,6 @@
     </div>
 
     <script src="assets/js/app.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
