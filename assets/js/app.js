@@ -95,7 +95,7 @@ function getMyIcon(conditionText, isDay) {
 
     return "assets/img/" + fileName;
 }
-// BACKGROUND SVG VIDEO UPDATER
+// BACKGROUND .SVG VIDEO UPDATER
 function updateBackground(conditionText, isDay) {
     let text = conditionText.toLowerCase();
     let bgFileName = "sunny.svg";
